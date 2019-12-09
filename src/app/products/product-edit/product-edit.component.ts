@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MessageService } from '../../messages/message.service';
+
 
 import { Product, ProductResolved } from '../product';
 import { ProductService } from '../product.service';
@@ -28,12 +28,11 @@ export class ProductEditComponent implements OnInit {
   }
   set product(value: Product) {
     this.currentProduct = value;
-    // Clone the object to retain a copy
+ 
     this.originalProduct = value ? { ...value } : null;
   }
 
   constructor(private productService: ProductService,
-              private messageService: MessageService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -62,11 +61,11 @@ export class ProductEditComponent implements OnInit {
   deleteProduct(): void {
     if (this.product.id === 0) {
       // Don't delete, it was never saved.
-      this.onSaveComplete(`${this.product.productName} was deleted`);
+      this.onSaveComplete();
     } else {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe({
-          next: () => this.onSaveComplete(`${this.product.productName} was deleted`),
+          next: () => this.onSaveComplete(),
           error: err => this.errorMessage = err
         });
       }
@@ -92,12 +91,12 @@ export class ProductEditComponent implements OnInit {
     if (this.isValid()) {
       if (this.product.id === 0) {
         this.productService.createProduct(this.product).subscribe({
-          next: () => this.onSaveComplete(`The new ${this.product.productName} was saved`),
+          next: () => this.onSaveComplete(),
           error: err => this.errorMessage = err
         });
       } else {
         this.productService.updateProduct(this.product).subscribe({
-          next: () => this.onSaveComplete(`The updated ${this.product.productName} was saved`),
+          next: () => this.onSaveComplete(),
           error: err => this.errorMessage = err
         });
       }
@@ -106,13 +105,9 @@ export class ProductEditComponent implements OnInit {
     }
   }
 
-  onSaveComplete(message?: string): void {
-    if (message) {
-      this.messageService.addMessage(message);
-    }
-    this.reset();
+  onSaveComplete(): void {
 
-    // Navigate back to the product list
+    this.reset();
     this.router.navigate(['/products']);
   }
 

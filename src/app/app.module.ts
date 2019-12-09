@@ -14,7 +14,6 @@ import { PageNotFoundComponent } from './page-not-found.component';
 
 /* Feature Modules */
 import { UserModule } from './user/user.module';
-import { MessageModule } from './messages/message.module';
 
 @NgModule({
   imports: [
@@ -23,7 +22,6 @@ import { MessageModule } from './messages/message.module';
     HttpClientModule,
     InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
     UserModule,
-    MessageModule,
     AppRoutingModule
   ],
   declarations: [

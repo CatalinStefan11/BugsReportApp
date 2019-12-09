@@ -3,7 +3,7 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Navigat
 
 import { AuthService } from './user/auth.service';
 
-import { MessageService } from './messages/message.service';
+
 
 @Component({
   selector: 'pm-root',
@@ -28,8 +28,7 @@ export class AppComponent {
   }
 
   constructor(private authService: AuthService,
-              private router: Router,
-              private messageService: MessageService) {
+              private router: Router) {
     router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
     });

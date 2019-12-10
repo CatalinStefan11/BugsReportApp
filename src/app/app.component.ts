@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 
 import { AuthService } from './user/auth.service';
+import { slideInAnimation } from './app.animation';
 
 
 
@@ -9,7 +10,7 @@ import { AuthService } from './user/auth.service';
   selector: 'pm-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  //animations: [slideInAnimation]
+  animations: [slideInAnimation]
 })
 export class AppComponent {
   pageTitle = 'Bugs Report Application';

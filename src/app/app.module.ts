@@ -14,13 +14,14 @@ import { PageNotFoundComponent } from './page-not-found.component';
 
 /* Feature Modules */
 import { UserModule } from './user/user.module';
+import { ProjectData } from './projects/project-data';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
+    InMemoryWebApiModule.forRoot(ProjectData, { delay: 1000 }),
     UserModule,
     AppRoutingModule
   ],

@@ -14,8 +14,16 @@ import { SelectiveStrategy } from './selective-strategy.service';
         path: 'products',
         canActivate: [AuthGuard],
         data: { preload: false },
-        loadChildren: () =>
+        loadChildren: () => 
           import('./products/product.module').then(m => m.ProductModule)
+        
+      },
+      {
+        path: 'projects',
+        canActivate: [AuthGuard],
+        data: { preload: false },
+        loadChildren: () => 
+          import('./projects/project.module').then(m => m.ProjectModule)
       },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent }

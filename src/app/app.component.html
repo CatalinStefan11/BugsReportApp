@@ -18,13 +18,14 @@
     </li>
     <li class="nav-item">
       <a class="nav-link"
-       
+      routerLinkActive="active"
          >Testing Projects</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link"
-         
-        >All projects</a>
+      <a class="nav-link"  
+      routerLinkActive="active"
+      [routerLink]="['/projects']">All projects</a>
+
     </li>
     <li class="nav-item">
       <a class="nav-link"
@@ -38,7 +39,7 @@
     <li class="nav-item"
         *ngIf="isLoggedIn">
       <a class="nav-link"
-         [routerLink]="['/login']">Welcome {{ userName }}</a>
+         [routerLink]="['/welcome']">Welcome {{ userName }}</a>
     </li>
 
 
@@ -55,9 +56,10 @@
   </ul>
 </nav>
 
-<div class="container">
+<div class="container" [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''">
   <div class="row">
     <div class="col-md-10">
+        
       <router-outlet #o="outlet"></router-outlet>
     </div>
     <div class="col-md-2">

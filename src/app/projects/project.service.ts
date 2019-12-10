@@ -83,6 +83,7 @@ export class ProjectService {
       id: 0,
       projectName: null,
       description: null,
+      projectRepo: null,
     };
   }
 }

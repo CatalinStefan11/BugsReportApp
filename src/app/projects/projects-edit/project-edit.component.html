@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body"
+       *ngIf="project">
+    <div class="wizard">
+      <a [routerLink]="['info']"
+         routerLinkActive="active">
+        Project Information<span [ngClass]="{'fa fa-exclamation': !isValid('info')}"></span>
+      </a>
+      <a [routerLink]="['tags']"
+         routerLinkActive="active">
+        Team Members<span [ngClass]="{'fa fa-exclamation': !isValid('tags')}"></span>
+      </a>
+    </div>
+
+    <router-outlet></router-outlet>
+
+
+    <div class="row mb-2">
+      <div class="col-md-4">
+        <button class="btn btn-primary mr-3"
+                style="width:80px"
+                type="button"
+                [title]="isValid() ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                [disabled]="!isValid()"
+                (click)="saveProject()">
+          Save
+        </button>
+        <button class="btn btn-outline-secondary mr-3"
+                style="width:80px"
+                type="button"
+                title="Cancel your edits"
+                [routerLink]="['/projects']">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-danger"
+     *ngIf="errorMessage">{{errorMessage}}
+</div>

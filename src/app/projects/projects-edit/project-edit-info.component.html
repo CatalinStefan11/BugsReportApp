@@ -1,0 +1,76 @@
+<div class="card-body">
+  <form novalidate
+        #projectForm="ngForm">
+    <fieldset>
+      <legend>Project Information</legend>
+
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label"
+               for="projectName">Project Name</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="projectName"
+                 type="text"
+                 placeholder="Name (required)"
+                 required
+                 minlength="3"
+                 [(ngModel)]=project.projectName
+                 name="projectName"
+                 #projectNameVar="ngModel"
+                 [ngClass]="{'is-invalid': (projectNameVar.touched || 
+                                            projectNameVar.dirty ||) && 
+                                            !projectNameVar.valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="projectNameVar.errors?.required">
+              Project name is required.
+            </span>
+            <span *ngIf="projectNameVar.errors?.minlength">
+              Project name must be at least three characters.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label"
+               for="projectRepo">Product Repository</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="projectRepo"
+                 type="text"
+                 placeholder="Repository (required)"
+                 required
+                 [(ngModel)]=project.projectRepo
+                 name="projectRepo"
+                 #projectRepoVar="ngModel"
+                 [ngClass]="{'is-invalid': (projectRepoVar.touched || 
+                                             projectRepoVar.dirty ||
+                                            ) &&
+                                            !projectRepoVar.valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="projectRepoVar.errors?.required">
+              Product code is required.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label"
+               for="descriptionId">Description</label>
+        <div class="col-md-8">
+          <textarea class="form-control"
+                    id="descriptionId"
+                    placeholder="Description"
+                    rows=3
+                    [(ngModel)]=project.description
+                    name="description"></textarea>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<div class='alert alert-danger'
+     *ngIf='errorMessage'>{{errorMessage}}
+</div>

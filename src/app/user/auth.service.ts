@@ -19,6 +19,15 @@ export class AuthService {
     return !!this.currentUser;
   }
 
+  httpOptions = {
+    headers: new HttpHeaders({ 
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Methods': 'GET, POST',
+      'Content-Type':'application/json'
+      
+    })
+  };
+
   constructor(private http: HttpClient) { }
 
   login(userName: string, password: string): void {
@@ -47,16 +56,23 @@ export class AuthService {
     this.currentUser = null;
   }
   
-  private URL = 'api/users';
+  private URL = 'http://localhost:8080/user-api/users';
+
+
 
   getUsers(): Observable<User2[]> {
-    return this.http.get<User2[]>(this.URL)
+ 
+    
+    return this.http.get<User2[]>(this.URL, this.httpOptions)
+    
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
 
+
+  
   getUser(id: number): Observable<User2> {
     if (id === 0) {
       return of(this.initializeUser());
@@ -116,7 +132,7 @@ export class AuthService {
   private initializeUser(): User2 {
     return {
       id: 0,
-      userName: null,
+      email: null,
       password: null
     };
   }

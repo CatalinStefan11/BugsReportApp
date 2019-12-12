@@ -10,14 +10,14 @@ import { SelectiveStrategy } from './selective-strategy.service';
   imports: [
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
-      {
-        path: 'products',
-        canActivate: [AuthGuard],
-        data: { preload: false },
-        loadChildren: () => 
-          import('./products/product.module').then(m => m.ProductModule)
+      // {
+      //   path: 'products',
+      //   canActivate: [AuthGuard],
+      //   data: { preload: false },
+      //   loadChildren: () => 
+      //     import('./products/product.module').then(m => m.ProductModule)
         
-      },
+      // },
       {
         path: 'projects',
         canActivate: [AuthGuard],

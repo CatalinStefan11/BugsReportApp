@@ -4,13 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
-import { Project } from './project';
+import { Project, Project2 } from './project';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private projectsUrl = 'api/projects';
+  private projectsUrl = 'http://localhost:8080/project-api/projects';
 
   constructor(private http: HttpClient) { }
 

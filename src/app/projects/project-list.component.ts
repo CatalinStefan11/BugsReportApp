@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Project } from './project';
 import { ProjectService } from './project.service';
+import { AuthService } from '../user/auth.service';
+import {User2} from '../user/user2'
 
 @Component({
   templateUrl: './project-list.component.html',
@@ -28,10 +30,14 @@ export class ProjectListComponent implements OnInit {
 
   filteredProjects: Project[] = [];
   projects: Project[] = [];
-  
+  user12: User2 = {
+    email: 'ronaldo@cristiano.com',
+    password: 'asd'
+  }
 
   constructor(private projectService: ProjectService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private authService: AuthService) { }
 
 
            
@@ -40,12 +46,28 @@ export class ProjectListComponent implements OnInit {
     this.listFilter = this.route.snapshot.queryParamMap.get('filterBy') || '';
     this.showImage = this.route.snapshot.queryParamMap.get('showImage') === 'true';
 
+
     this.projectService.getProjects().subscribe({
       next: projects => {
         this.projects = projects;
-        this.filteredProjects = this.performFilter(this.listFilter);
+        console.log(projects)
+        // this.filteredProjects = this.performFilter(this.listFilter);
       },
       error: err => this.errorMessage = err
+    });
+
+
+
+    this.authService.getUsers().subscribe({
+      next: users => console.log(users)
+    })
+
+
+
+    
+
+    this.authService.createUser(this.user12).subscribe(data => {
+      
     });
   }
 
@@ -58,5 +80,7 @@ export class ProjectListComponent implements OnInit {
   toggleImage(): void {
     this.showImage = !this.showImage;
   }
+
+
 
 }

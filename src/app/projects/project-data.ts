@@ -38,34 +38,34 @@ export class ProjectData implements InMemoryDbService {
         description: 'repo',
       }
     ];
-    const users: User2[] = [
-      {
-        id: 1,
-        userName: 'Beirut@maxum.com',
-        password: "1234",
-      },
-      {
-        id: 2,
-        userName: 'Beirut@asdf.com',
-        password: "1234",
-      },
-      {
-        id: 3,
-        userName: 'Beirut@gmail.com',
-        password: "5679",
-      },
-      {
-        id: 4,
-        userName: 'Beirut',
-        password: "1234",
-      },
-      {
-        id: 5,
-        userName: 'Beirut',
-        password: "1234",
-      }
-    ];
-    return { projects, users};
+    // const users: User2[] = [
+    //   {
+    //     id: 1,
+    //     userName: 'Beirut@maxum.com',
+    //     password: "1234",
+    //   },
+    //   {
+    //     id: 2,
+    //     userName: 'Beirut@asdf.com',
+    //     password: "1234",
+    //   },
+    //   {
+    //     id: 3,
+    //     userName: 'Beirut@gmail.com',
+    //     password: "5679",
+    //   },
+    //   {
+    //     id: 4,
+    //     userName: 'Beirut',
+    //     password: "1234",
+    //   },
+    //   {
+    //     id: 5,
+    //     userName: 'Beirut',
+    //     password: "1234",
+    //   }
+    // ];
+    return { projects, };
 
   }
 }

@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProjectEditComponent } from './projects-edit/project-edit.component';
 import { ProjectEditGuard } from './projects-edit/project-edit.guard';
 import { ProjectEditInfoComponent } from './projects-edit/project-edit-info.component';
+import { ProjectEditTagsComponent } from './projects-edit/project-edit-tags.component';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { ProjectEditInfoComponent } from './projects-edit/project-edit-info.comp
         children: [
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: 'info', component: ProjectEditInfoComponent},
-          { path: 'tags', component: ProjectEditInfoComponent }
+          { path: 'tags', component: ProjectEditTagsComponent}
         ]
       }
      
@@ -37,6 +38,9 @@ import { ProjectEditInfoComponent } from './projects-edit/project-edit-info.comp
   ],
   declarations: [
     ProjectListComponent,
+    ProjectEditComponent,
+    ProjectEditInfoComponent,
+    ProjectEditTagsComponent ,
    
    
   ]

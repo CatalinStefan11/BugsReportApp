@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o",
+    "start": "ng serve --port 4200",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
+    
   },
   "private": true,
   "dependencies": {
@@ -47,4 +48,5 @@
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
   }
+ 
 }

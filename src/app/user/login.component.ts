@@ -15,6 +15,7 @@ export class LoginComponent {
               private router: Router) { }
 
   login(loginForm: NgForm) {
+
     if (loginForm && loginForm.valid) {
       const userName = loginForm.form.value.userName;
       const password = loginForm.form.value.password;
@@ -29,5 +30,6 @@ export class LoginComponent {
     } else {
       this.errorMessage = 'Please enter a user name and password.';
     }
+
   }
 }

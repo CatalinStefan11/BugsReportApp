@@ -17,8 +17,7 @@
                  [(ngModel)]=project.projectName
                  name="projectName"
                  #projectNameVar="ngModel"
-                 [ngClass]="{'is-invalid': (projectNameVar.touched || 
-                                            projectNameVar.dirty ||) && 
+                 [ngClass]="{'is-invalid': (projectNameVar.touched || projectNameVar.dirty) && 
                                             !projectNameVar.valid }" />
           <span class="invalid-feedback">
             <span *ngIf="projectNameVar.errors?.required">
@@ -33,7 +32,7 @@
 
       <div class="form-group row">
         <label class="col-md-2 col-form-label"
-               for="projectRepo">Product Repository</label>
+               for="projectRepo">Project Repository</label>
         <div class="col-md-8">
           <input class="form-control"
                  id="projectRepo"
@@ -44,7 +43,7 @@
                  name="projectRepo"
                  #projectRepoVar="ngModel"
                  [ngClass]="{'is-invalid': (projectRepoVar.touched || 
-                                             projectRepoVar.dirty ||
+                                             projectRepoVar.dirty 
                                             ) &&
                                             !projectRepoVar.valid }" />
           <span class="invalid-feedback">
@@ -57,9 +56,10 @@
 
       <div class="form-group row">
         <label class="col-md-2 col-form-label"
-               for="descriptionId">Description</label>
+               for="descriptionId">Description (required)</label>
         <div class="col-md-8">
           <textarea class="form-control"
+                    required
                     id="descriptionId"
                     placeholder="Description"
                     rows=3

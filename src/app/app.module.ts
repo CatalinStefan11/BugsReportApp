@@ -1,27 +1,33 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { ProductData } from './products/product-data';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import {HttpClientJsonpModule} from '@angular/common/http'
+
 
 /* Feature Modules */
 import { UserModule } from './user/user.module';
 import { ProjectData } from './projects/project-data';
+import { AuthService } from './user/auth.service';
+// import { HttpRequestInterceptor } from './httpRequestInterceptor';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(ProjectData, { delay: 1000 }),
+    HttpClientJsonpModule,
+    // InMemoryWebApiModule.forRoot(ProjectData, { delay: 1000 }),
     UserModule,
     AppRoutingModule
   ],
@@ -30,6 +36,7 @@ import { ProjectData } from './projects/project-data';
     WelcomeComponent,
     PageNotFoundComponent
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

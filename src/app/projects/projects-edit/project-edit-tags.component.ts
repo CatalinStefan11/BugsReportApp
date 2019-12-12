@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Project } from '../project';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   templateUrl: './project-edit-tags.component.html'
@@ -11,7 +12,8 @@ export class ProjectEditTagsComponent implements OnInit {
   // newTags = '';
   // project: Project;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, 
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     // this.route.parent.data.subscribe(data => {
@@ -19,7 +21,7 @@ export class ProjectEditTagsComponent implements OnInit {
     // });
   }
 
-  // Add the defined tags
+  
   // addTags(): void {
   //   if (!this.newTags) {
   //     this.errorMessage = 'Enter the search keywords separated by commas and then press Add';
@@ -31,8 +33,8 @@ export class ProjectEditTagsComponent implements OnInit {
   //   }
   // }
 
-  // Remove the tag from the array of tags.
-  removeTag(idx: number): void {
-    // this.project.tags.splice(idx, 1);
-  }
+  // // Remove the tag from the array of tags.
+  // removeTag(idx: number): void {
+  //   this.project.tags.splice(idx, 1);
+  // }
 }

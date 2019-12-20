@@ -3,7 +3,8 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Navigat
 
 import { AuthService } from './user/auth.service';
 import { slideInAnimation } from './app.animation';
-
+import { User } from './user/user2';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { slideInAnimation } from './app.animation';
 export class AppComponent {
   pageTitle = 'Bugs Report Application';
   loading = true;
+  currentUser: User;
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
@@ -22,8 +24,8 @@ export class AppComponent {
 
 
   get userName(): string {
-    if (this.authService.currentUser) {
-      return this.authService.currentUser.userName;
+    if (this.authService.user) {
+      return this.authService.user.email;
     }
     return '';
   }
@@ -32,7 +34,8 @@ export class AppComponent {
               private router: Router) {
     router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
-    });
+     });
+    this.currentUser = this.authService.user;
   }
 
   checkRouterEvent(routerEvent: Event): void {
@@ -51,5 +54,6 @@ export class AppComponent {
   logOut(): void {
     this.authService.logout();
     this.router.navigateByUrl('/welcome');
+    
   }
 }

@@ -1,120 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, tap, map, filter } from 'rxjs/operators';
 
-import { User2 } from './user2';
-import { User } from './user';
+import { User } from './user2';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser: User;
+  private currentUserSubject: BehaviorSubject<User>;
+  private currentUser: Observable<User>;
+  public user: User;
   redirectUrl: string;
+  private LoginURL = 'http://localhost:8080/user-api/login';
 
-  get isLoggedIn(): boolean {
-    return !!this.currentUser;
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 
-      'Access-Control-Allow-Origin':'*',
-      'Access-Control-Allow-Methods': 'GET, POST',
-      'Content-Type':'application/json'
-      
-    })
-  };
+  get isLoggedIn(): boolean {
+    return !!this.user
+  }
 
-  constructor(private http: HttpClient) { }
 
-  login(userName: string, password: string): void {
-    if (!userName || !password) {
-     
-      return;
-    }
-    if (userName === 'admin') {
-      this.currentUser = {
-        id: 1,
-        userName: userName,
-        isAdmin: true
-      };
-    
-      return;
-    }
-    this.currentUser = {
-      id: 2,
-      userName: userName,
-      isAdmin: false
-    };
-   
+  login(user: User): Observable<User> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    user.id = null;
+    return this.http.post<User>(this.LoginURL, user, { headers })
+      .pipe((map(user => {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        this.user = user;
+        return user;
+      })))
+  }
+
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
   }
 
   logout(): void {
+    this.user = null;
+    localStorage.clear();
     this.currentUser = null;
-  }
-  
-  private URL = 'http://localhost:8080/user-api/users';
-
-
-
-  getUsers(): Observable<User2[]> {
- 
-    
-    return this.http.get<User2[]>(this.URL, this.httpOptions)
-    
-      .pipe(
-        tap(data => console.log(JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+    this.currentUserSubject.next(null);
   }
 
-
-  
-  getUser(id: number): Observable<User2> {
-    if (id === 0) {
-      return of(this.initializeUser());
-    }
-    const url = `${this.URL}/${id}`;
-    return this.http.get<User2>(url)
-      .pipe(
-        tap(data => console.log('getUser: ' + JSON.stringify(data))),
-        catchError(this.handleError)
-      );
-  }
-
-  createUser(user: User2): Observable<User2> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    user.id = null;
-    return this.http.post<User2>(this.URL, user, { headers })
-      .pipe(
-        tap(data => console.log('createUser: ' + JSON.stringify(data))),
-        catchError(this.handleError)
-      );
-  }
-
-  deleteUser(id: number): Observable<{}> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.URL}/${id}`;
-    return this.http.delete<User2>(url, { headers })
-      .pipe(
-        tap(data => console.log('deleteUser: ' + id)),
-        catchError(this.handleError)
-      );
-  }
-
-  updateUser(User: User2): Observable<User2> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.URL}/${User.id}`;
-    return this.http.put<User2>(url, User, { headers })
-      .pipe(
-        tap(() => console.log('updateUser: ' + User.id)),
-        map(() => User),
-        catchError(this.handleError)
-      );
-  }
 
   private handleError(err) {
 
@@ -129,93 +66,6 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
-  private initializeUser(): User2 {
-    return {
-      id: 0,
-      email: null,
-      password: null
-    };
-  }
 }
 
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuthService {
-//   private URL = 'api/users';
-
-//   constructor(private http: HttpClient) { }
-
-//   getUsers(): Observable<User2[]> {
-//     return this.http.get<User2[]>(this.URL)
-//       .pipe(
-//         tap(data => console.log(JSON.stringify(data))),
-//         catchError(this.handleError)
-//       );
-//   }
-
-//   getUser(id: number): Observable<User2> {
-//     if (id === 0) {
-//       return of(this.initializeUser());
-//     }
-//     const url = `${this.URL}/${id}`;
-//     return this.http.get<User2>(url)
-//       .pipe(
-//         tap(data => console.log('getUser: ' + JSON.stringify(data))),
-//         catchError(this.handleError)
-//       );
-//   }
-
-//   createUser(user: User2): Observable<User2> {
-//     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-//     user.id = null;
-//     return this.http.post<User2>(this.URL, user, { headers })
-//       .pipe(
-//         tap(data => console.log('createUser: ' + JSON.stringify(data))),
-//         catchError(this.handleError)
-//       );
-//   }
-
-//   deleteUser(id: number): Observable<{}> {
-//     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-//     const url = `${this.URL}/${id}`;
-//     return this.http.delete<User2>(url, { headers })
-//       .pipe(
-//         tap(data => console.log('deleteUser: ' + id)),
-//         catchError(this.handleError)
-//       );
-//   }
-
-//   updateUser(User: User2): Observable<User2> {
-//     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-//     const url = `${this.URL}/${User.id}`;
-//     return this.http.put<User2>(url, User, { headers })
-//       .pipe(
-//         tap(() => console.log('updateUser: ' + User.id)),
-//         map(() => User),
-//         catchError(this.handleError)
-//       );
-//   }
-
-//   private handleError(err) {
-
-//     let errorMessage: string;
-//     if (err.error instanceof ErrorEvent) {
-
-//       errorMessage = `An error occurred: ${err.error.message}`;
-//     } else {
-//       errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
-//     }
-//     console.error(err);
-//     return throwError(errorMessage);
-//   }
-
-//   private initializeUser(): User2 {
-//     return {
-//       id: 0,
-//       userName: null,
-//       password: null
-//     };
-//   }
-// }

@@ -5,23 +5,26 @@ import { ProjectListComponent } from './project-list.component';
 
 
 import { ProjectResolver } from './project-resolver.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { SharedModule } from '../shared/shared.module';
+
 import { ProjectEditComponent } from './projects-edit/project-edit.component';
 import { ProjectEditGuard } from './projects-edit/project-edit.guard';
 import { ProjectEditInfoComponent } from './projects-edit/project-edit-info.component';
 import { ProjectEditTagsComponent } from './projects-edit/project-edit-tags.component';
 
 
+
 @NgModule({
   imports: [
-    SharedModule,
+    CommonModule,
+    FormsModule,
     RouterModule.forChild([
       {
         path: '',
         component: ProjectListComponent
       },
-  
       {
         path: ':id/edit',
         component: ProjectEditComponent,
@@ -40,7 +43,8 @@ import { ProjectEditTagsComponent } from './projects-edit/project-edit-tags.comp
     ProjectListComponent,
     ProjectEditComponent,
     ProjectEditInfoComponent,
-    ProjectEditTagsComponent ,
+    ProjectEditTagsComponent,
+    
    
    
   ]

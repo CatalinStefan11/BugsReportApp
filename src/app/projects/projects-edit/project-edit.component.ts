@@ -124,15 +124,7 @@ export class ProjectEditComponent implements OnInit {
     }
 
     
-    // if (
-     
-    //   membrii proiectului. validare. dropdown.vector string
-
-    //   ) {
-    //   this.dataIsValid['tags'] = true;
-    // } else {
-    //   this.dataIsValid['tags'] = false;
-    // }
+    
   }
 
 }

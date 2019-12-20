@@ -14,11 +14,20 @@ export class AuthGuard implements CanActivate, CanLoad {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.checkLoggedIn(state.url);
+    
+
+    const currentUser = this.authService.user;
+    if (currentUser) {
+        
+        return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
-  // Use the segments to build the full route
-  // when using canLoad
+  
   canLoad(route: Route, segments: UrlSegment[]): boolean {
     return this.checkLoggedIn(segments.join('/'));
   }
@@ -28,7 +37,6 @@ export class AuthGuard implements CanActivate, CanLoad {
       return true;
     }
 
-    // Retain the attempted URL for redirection
     this.authService.redirectUrl = url;
     this.router.navigate(['/login']);
     return false;

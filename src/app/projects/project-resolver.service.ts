@@ -32,6 +32,9 @@ export class ProjectResolver implements Resolve<ProjectResolved> {
           return of({ project: null, error: message });
         })
       );
+
+
+      
   }
 
 }

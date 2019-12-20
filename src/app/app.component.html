@@ -1,7 +1,6 @@
 <span class="fa fa-spinner spinner"
       *ngIf="loading"></span>
 
-<!-- Main part of the menu-->
 <nav class="navbar navbar-expand navbar-light bg-light">
   <a class="navbar-brand">{{pageTitle}}</a>
   <ul class="navbar-nav">
@@ -12,7 +11,7 @@
     </li>
     <li class="nav-item">
       <a class="nav-link"
-         [routerLink]="['/products']"
+        
          routerLinkActive="active"
          [routerLinkActiveOptions]="{ exact : true}">Developer Projects</a>
     </li>
@@ -34,7 +33,6 @@
     </li>
   </ul>
 
-  <!-- Left justified part of the menu -->
   <ul class="navbar-nav ml-auto">
     <li class="nav-item"
         *ngIf="isLoggedIn">
@@ -42,6 +40,11 @@
          [routerLink]="['/welcome']">Welcome {{ userName }}</a>
     </li>
 
+    <li class="nav-item"
+    *ngIf="!isLoggedIn">
+  <a class="nav-link"
+     [routerLink]="['/register']">Register</a>
+</li>
 
     <li class="nav-item"
         *ngIf="!isLoggedIn">

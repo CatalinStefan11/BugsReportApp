@@ -14,8 +14,8 @@ export class ProjectService {
 
   constructor(private http: HttpClient) { }
 
-  getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.projectsUrl)
+  getProjects(): Observable<Project2[]> {
+    return this.http.get<Project2[]>(this.projectsUrl)
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)

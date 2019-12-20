@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Project } from './project';
+import { Project, Project2 } from './project';
 import { ProjectService } from './project.service';
 import { AuthService } from '../user/auth.service';
-import {User2} from '../user/user2'
+import {User} from '../user/user2'
 
 @Component({
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css']
 })
 export class ProjectListComponent implements OnInit {
-  pageTitle = 'You are developer in this projects';
+  pageTitle = 'All Projects';
   imageWidth = 50;
   imageMargin = 2;
   showImage = false;
@@ -28,12 +28,9 @@ export class ProjectListComponent implements OnInit {
     this.filteredProjects = this.listFilter ? this.performFilter(this.listFilter) : this.projects;
   }
 
-  filteredProjects: Project[] = [];
-  projects: Project[] = [];
-  user12: User2 = {
-    email: 'ronaldo@cristiano.com',
-    password: 'asd'
-  }
+  filteredProjects: Project2[] = [];
+  projects: Project2[] = [];
+ 
 
   constructor(private projectService: ProjectService,
               private route: ActivatedRoute,
@@ -51,30 +48,20 @@ export class ProjectListComponent implements OnInit {
       next: projects => {
         this.projects = projects;
         console.log(projects)
-        // this.filteredProjects = this.performFilter(this.listFilter);
+        this.filteredProjects = this.performFilter(this.listFilter);
       },
       error: err => this.errorMessage = err
     });
 
 
 
-    this.authService.getUsers().subscribe({
-      next: users => console.log(users)
-    })
-
-
-
-    
-
-    this.authService.createUser(this.user12).subscribe(data => {
-      
-    });
+  
   }
 
-  performFilter(filterBy: string): Project[] {
+  performFilter(filterBy: string): Project2[] {
     filterBy = filterBy.toLocaleLowerCase();
-    return this.projects.filter((project: Project) =>
-      project.projectName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    return this.projects.filter((project: Project2) =>
+      project.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 
   toggleImage(): void {
